@@ -35,11 +35,4 @@ Algoritmo ejercicio8
 	Escribir numPar, " numeros pares";
 	Escribir numImpar, " numeros impares";
 	
-	
-	
-	
-	
-	
-	
-	
 FinAlgoritmo

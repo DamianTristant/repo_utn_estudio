@@ -10,9 +10,5 @@ Algoritmo ejercicio5
 	Mientras Que  numUsu <> numAzar
 	
 	Escribir "Acerto en el intento ", cantVeces;
-	
-	
-	
-	
-	
+
 FinAlgoritmo
