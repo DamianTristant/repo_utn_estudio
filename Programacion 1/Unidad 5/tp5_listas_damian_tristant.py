@@ -52,5 +52,49 @@ for numeros in range(10,31,5):
 print(lista_numeros[0:2])
 
 '''
-    
 
+'''
+#Ejercicio 7
+
+autos = ["sedan", "polo", "suran", "gol"]
+print(autos)
+
+autos[1] = "auto"
+autos[2] = "0km"
+
+print(autos)
+
+'''
+
+'''
+#Ejercicio 8
+
+dobles = []
+dobles.append(10)
+dobles.append(20)
+dobles.append(30)
+
+print(dobles)
+
+'''
+
+'''
+#Ejercicio 9
+
+compras = [["pan", "leche"], ["arroz", "fideos", "salsa"],["agua"]]
+print(compras)
+
+compras[2].append("jugo")
+compras[1][1] = "tallarines"
+compras[0].remove("pan")
+print(compras)
+
+'''
+
+'''
+#Ejercicio 10
+
+lista_anidada = [15, True, [25.5, 57.9, 30.6], False]
+print(lista_anidada)
+
+'''
