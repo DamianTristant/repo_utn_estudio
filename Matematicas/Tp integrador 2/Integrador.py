@@ -11,14 +11,6 @@ dni_1 = int(input("Ingrese el dni del primer integrante: "))
 dni_2 = int(input("Ingrese el dni del segundo integrante: "))
 dni_3 = int(input("Ingrese el dni del tercer integrante: "))
 
-#Pasamos a guardarlo en una lista para usarlos en nuestro bluce
-dnis = [dni_1, dni_2, dni_3]
-
-# Generamos los conjuntos de dígitos únicos
-conjuntos = [] 
-for dni in dnis:
-    conjuntos.append(obtener_digitos_unicos(dni))
-
 # Obtenemos los conjuntos de dígitos únicos y los guardamos en variables distintas
 conjunto_1 = set(obtener_digitos_unicos(dni_1))
 conjunto_2 = set(obtener_digitos_unicos(dni_2))
@@ -28,7 +20,7 @@ conjunto_3 = set(obtener_digitos_unicos(dni_3))
 print("\n Resultados conjuntos ùnicos ")
 print(f"DNI 1: {dni_1} : conjunto de dígitos únicos: A= {conjunto_1}")
 print(f"DNI 2: {dni_2} : conjunto de dígitos únicos: B= {conjunto_2}")
-print(f"DNI 2: {dni_2} : conjunto de dígitos únicos: C= {conjunto_3}")
+print(f"DNI 3: {dni_3} : conjunto de dígitos únicos: C= {conjunto_3}")
 ########PARTE A: Operaciones entre conjuntos ###########################################
 
 print("\n Unión de conjuntos: ")
@@ -70,7 +62,11 @@ print(unionABC-interseccionABC)
 
 # Imprimir por pantalla la frecuencia de los digitos en cada DNI
 print("\n= Frecuencia de dígitos en cada DNI =")
-# Recorremos la lista de DNIs (ya creada con dni_1 y dni_2) usando un bucle for
+
+#Pasamos a guardarlo en una lista para usarlos en nuestro bluce
+dnis = [dni_1, dni_2, dni_3]
+
+# Recorremos la lista de DNIs (ya creada con dni_1, dni_2 y dni_3) usando un bucle for
 for i in range(len(dnis)):
     dni_actual = dnis[i]  # Obtenemos el DNI en la posición i (puede ser dni_1 o dni_2)
     frecuencia = contar_frecuencia_digitos(dni_actual)              # Aplicamos la función
@@ -107,6 +103,7 @@ else:
 print ()
 
 ########PARTE B: Operaciones con años de nacimiento. Obtener conjuntos de digitos únicos#######################
+
 print("Bienvenidos a la segunda parte de nuestro programa.")
 print("De ahora en adelante vamos a trabajar con los años de nacimiento.")
 
@@ -152,7 +149,6 @@ else:
 
 # Calcular el producto cartesiano entre el conjunto de años y el conjunto de edades actuales.
 
-
 anio_actual = datetime.now().year               # Consiguiendo de esta manera el año actual
 
 # Tenemos que calcular las edades actuales
@@ -163,11 +159,10 @@ for anio in anios_nacimiento:
 
 # Pasamos a culcular el producto cartesiano
 producto_cartesiano = []
-for anio in anios_nacimiento:
-    for edad in edades_actuales:
-        producto_cartesiano.append((anio, edad))
+for edad in edades_actuales:
+    producto_cartesiano.append((anio, edad))
 
 # Mostramos el resultado
 print("\n Producto cartesiano entre años de nacimiento y edades actuales: ")
-for pares in producto_cartesiano:
-    print(pares)
+#for pares in producto_cartesiano:
+print(producto_cartesiano)
