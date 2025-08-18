@@ -1,0 +1,21 @@
+Este segundo archivo también representa un conjunto de datos de profesionales que trabajan en programación en modalidad remota, pero incorpora una variable con orden jerárquico: el nivel de experiencia laboral. Cada registro representa una persona diferente encuestada.
+
+Nivel_Experiencia: Junior, SemiSenior o Senior.
+Tickets_Soporte: cantidad de tickets resueltos en una semana.
+Tiempo_Conexion_Min: tiempo promedio de conexión diaria a los sistemas.
+Utilizá este archivo para construir tablas de frecuencia para las tres variables. Importante: en este caso Nivel_Experiencia es una variable categórica ordinal, por lo tanto:
+
+Debés construir frecuencia absoluta, frecuencia relativa y también frecuencia acumulada.
+El orden natural de la variable (Junior < SemiSenior < Senior) debe conservarse en la tabla. 💡Si necesitás una pista para lograrlo, podés desplegarla a continuación:
+📌 Ver pista
+Para las variables numéricas Tickets_Soporte y Tiempo_Conexion_Min, construí las tres columnas de la tabla de frecuencias. Recordá que Tiempo_Conexion_Min debe agruparse en clases usando la función cut().
+
+Pista:
+
+En R podés definir el orden de una variable categórica usando un factor ordenado así:
+datos$Nivel_Experiencia <- factor(
+  datos$Nivel_Experiencia,
+  levels = c("Junior", "SemiSenior", "Senior"),
+  ordered = TRUE
+)
+Esto permitirá que la tabla de frecuencia acumulada respete el orden esperado.
