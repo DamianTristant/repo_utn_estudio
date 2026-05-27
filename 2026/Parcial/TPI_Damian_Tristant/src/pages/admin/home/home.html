@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Food Store</title>
+    <link rel="stylesheet" href="../../../styles.css"> 
+    <link rel="stylesheet" href="./home.css">
+</head>
+<body>
+
+    <header class="admin-header">
+        <div class="header-container">
+            <h1>Food<span>Store</span> Admin</h1>
+            <nav>
+                <button id="logoutButton" class="btn-logout">Cerrar Sesión</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="admin-content">
+        <div class="admin-actions">
+            <h2>Gestión de Productos</h2>
+            <button id="btn-add-product" class="btn-primary">
+                <span>+</span> Nuevo Producto
+            </button>
+        </div>
+
+        <section class="table-container">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-product-body">
+                    </tbody>
+            </table>
+        </section>
+    </main>
+
+    <div id="product-modal" class="modal">
+        <div class="modal-card">
+            <header class="modal-header">
+                <h3 id="modal-title">Agregar Producto</h3>
+                <button id="btn-close-modal" class="close-x">&times;</button>
+            </header>
+            <form id="product-form">
+                <input type="hidden" id="p-id">
+                <div class="form-group">
+                    <label for="p-nombre">Nombre del Producto</label>
+                    <input type="text" id="p-nombre" required placeholder="Ej: Pizza Napolitana">
+                </div>
+                <div class="form-group">
+                    <label for="p-precio">Precio ($)</label>
+                    <input type="number" id="p-precio" required placeholder="1500">
+                </div>
+                <div class="form-group">
+                    <label for="p-desc">Descripción</label>
+                    <textarea id="p-desc" required placeholder="Detalles del producto..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="p-img">Nombre de Imagen</label>
+                    <input type="text" id="p-img" required placeholder="pizza.jpg">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btn-cancel" class="btn-secondary">Cancelar</button>
+                    <button type="submit" class="btn-primary">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="./home.ts"></script>
+</body>
+</html>

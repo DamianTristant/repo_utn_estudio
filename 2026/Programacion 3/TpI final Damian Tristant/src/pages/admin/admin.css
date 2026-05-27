@@ -1,0 +1,65 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 20px;
+}
+
+h2 {
+    color: #333;
+    border-bottom: 2px solid #ffcc00; /* Color temático (ej: comida) */
+    padding-bottom: 10px;
+}
+
+#contenedor-productos-admin {
+    display: grid;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.producto-admin {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s;
+}
+
+.producto-admin:hover {
+    transform: scale(1.01);
+}
+
+.info-prod strong {
+    font-size: 1.2rem;
+    color: #2c3e50;
+}
+
+.botones-acciones {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-editar {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-eliminar {
+    background-color: #e74c3c;
+    color: white;
+}
+
+button:hover {
+    opacity: 0.8;
+}

@@ -1,0 +1,28 @@
+GUÍA DE DEFENSA PARA EL COLOQUIO: TPI ETAPA 1
+Cuando los profesores te pidan que expliques tu trabajo, te sugerimos estructurar tu respuesta en tres grandes pilares:
+
+1. Presentación del Negocio y el Problema
+Qué decir: "Elegimos un sistema de gestión para un Taller de Carpintería Industrial. El problema principal del negocio era la pérdida de trazabilidad: no sabían con exactitud qué materiales se asignaban a cada mueble, qué cliente pedía cada proyecto y en qué estado estaba la fabricación. Diseñamos un modelo NoSQL con 3 colecciones: clientes, productos (catálogo maestro) y ordenes_trabajo (colección central)."
+
+2. Justificación del Diseño NoSQL (Lo más importante)
+Los profesores te van a preguntar sí o sí: ¿Por qué acá usaste Embedding y allá Linking? Tenés que responder con estos argumentos técnicos:
+
+Por qué usamos Embedding (Anidamiento):
+
+En los datos de contacto del cliente: "Es una relación estricta de 1 a 1. El teléfono y la dirección no tienen un ciclo de vida propio fuera del cliente, por lo que guardarlos juntos reduce las consultas a la base de datos."
+
+En los ítems dentro de la Orden de Trabajo: "Este es un patrón híbrido. Embebemos el nombre del mueble y el precio cobrado en ese instante para congelar el valor histórico. Si el mes que viene el roble aumenta en la colección productos, la orden de trabajo vieja no se altera y mantiene el precio real pactado, cuidando la integridad de la facturación."
+
+Por qué usamos Linking (Referencia):
+
+En el cliente_id dentro de las Órdenes: "Es una relación de 1 a Muchos (1:N) que puede crecer indefinidamente. Si metiéramos todos los datos del cliente dentro de cada orden, duplicaríamos información masivamente. Además, si el cliente cambia su número de teléfono, con el enfoque de Linking solo lo actualizamos en un único documento (en la colección clientes) y todas las órdenes reflejan el cambio mediante el ID, manteniendo la consistencia."
+
+3. Infraestructura y Reglas del Motor
+Baja Lógica: "Por requerimiento de auditoría, implementamos un sistema donde ningún dato se borra físicamente. Añadimos el atributo "activo": true/false. Cuando se da de baja un registro, usamos un operador $set para pasarlo a false, y las consultas operativas siempre filtran solo los documentos activos."
+
+Seguridad en la Nube: "Para cumplir con el despliegue Cloud, creamos un Cluster M0 en MongoDB Atlas. Aplicamos buenas prácticas de seguridad informática: creamos un usuario con permisos administradores para el desarrollo, y un usuario exclusivo con permisos de 'Solo Lectura' (Read-Only) para la corrección del docente, protegiendo el acceso total a la cuenta."
+
+💡 Un último consejo para el oral:
+Si te preguntan por qué eligieron MongoDB (NoSQL) en lugar de una base de datos relacional tradicional (como MySQL), podés decir:
+
+"Elegimos MongoDB por la flexibilidad del esquema (un mueble a medida puede requerir campos de dimensiones o maderas distintas a un mueble estándar) y por la rapidez de lectura que nos da el poder embeber los ítems directamente adentro de la orden, evitando tener que hacer cruces (joins) complejos entre tablas cada vez que queremos ver un pedido."

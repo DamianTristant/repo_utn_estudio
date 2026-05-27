@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de administracion</title>
+    <link rel="stylesheet" href="/src/pages/admin/admin.css"> </head>
+<body>
+    <header>
+        <h1>Panel de administracion</h1>
+        <nav>
+            <a href="/index.html">Volver a la tienda</a>
+        </nav>
+    </header>
+    <main>
+        <section id="contenedor-productos">
+            <h2>Gestion de productos</h2>
+        </section>
+            <!--Tabla de productos-->
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><img src="/img/hamburguesa.jpg" alt="Hamburguesa" width="70" height="70"></td>
+                        <td>Hamburguesa Triple</td>
+                        <td>Hamburguesas</td>
+                        <td>$25000</td>
+                        <td>12</td>
+                        <td><a href="#">Editar</a> | <a href="#">Eliminar</a></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><img src="/img/pizza.jpg" alt="Pizza" width="70" height="70"></td>
+                        <td>Pizza de Muzzarella</td>
+                        <td>Pizzas</td>
+                        <td>$18000</td>
+                        <td>5</td>
+                        <td><a href="#">Editar</a> | <a href="#">Eliminar</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <hr>
+        <section>
+            <!--Formulario de carga rapida-->
+            <details open>
+                <summary><strong>Agregar producto</strong></summary>
+                <form>
+                    <p>
+                        <label>Nombre del producto:</label><br>
+                        <input type="text" placeholder="Ej: Lomito completo" required>
+                    </p>
+                    <p>
+                        <label>Precio:</label><br>
+                        <input type="number" placeholder="$" step="1" required>
+                    </p>
+                    <p>
+                        <label>Categoria:</label><br>
+                        <select>
+                            <option value="" disabled selected></option>
+                            <option value="hamburguesas">Hamburguesas</option>
+                            <option value="pizzas">Pizzas</option>
+                            <option value="bebidas">Bebidas</option>
+                        </select>
+                    </p>
+                    <button type="submit">Guardar producto</button>
+                </form>
+            </details>
+        </section>
+    </main>
+
+    <footer>
+        <p>Panel de Administración - Food Store v1.0</p>
+    </footer>
+
+    <section id="contenedor-productos-admin">
+    <h2>Cargando gestión de productos...</h2>
+</section>
+
+<script type="module" src="/src/main.ts"></script>
+<script type="module" src="./admin.ts"></script>
+
+</body>
+</html>

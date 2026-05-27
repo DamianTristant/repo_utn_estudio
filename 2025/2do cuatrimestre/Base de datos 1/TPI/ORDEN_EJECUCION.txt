@@ -1,0 +1,11 @@
+1. Creación de base de datos y tabla:
+
+Ejecutar: /Primera etapa/creacion_bd.sql
+
+2. Inserción masiva:
+
+Ejecutar: /Segunda etapa/segunda_insercion_masiva.sql
+
+
+Con ejecutar esos scripts ya van a tener las tablas en su ambiente con 200.000 registros.
+A partir de eso ya van a poder hacer las consultas y vistas que necesiten para su parte del TP.
