@@ -43,9 +43,9 @@ public abstract class Base {
         this.createdAt = createdAt;
     }
 
+
     // Sobreescritura de Equals y HashCode
     // Comparo los objetos por su ID único
-
 
     @Override
     public int hashCode() {
@@ -54,10 +54,10 @@ public abstract class Base {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Base base = (Base) obj;
-        return Objects.equals(id,base.id);
+        if (this == obj) return true;                                       //Si ocupan el mismo lugar, son identicos
+        if (obj == null || getClass() != obj.getClass()) return false;      //Si el obj esta vacio o es de otra clase, son distintos
+        Base base = (Base) obj;                                             //casteo el obj y lo guarda en una variable para poder traer su id y compararlo
+        return Objects.equals(id,base.id);                                  //Son iguales si sus id coinciden
     }
 
     @Override
