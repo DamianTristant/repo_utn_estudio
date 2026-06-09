@@ -55,11 +55,10 @@ public class Pedido extends Base implements Calculable {
 
     @Override
     public void calcularTotal() {
-        double suma = 0.0;
-        for (DetallePedido detalle : detalles) {
-            suma += detalle.getSubtotal();
-        }
-        this.total = suma;
+        // Transformamos el Set de detalles en un Stream, extraemos cada subtotal y los sumamos
+        this.total = detalles.stream()
+                .mapToDouble(DetallePedido::getSubtotal)
+                .sum();
     }
 }
 
