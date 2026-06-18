@@ -4,36 +4,22 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-
 @Entity
 @Table(name = "detalle_pedido")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@ToString
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class DetallePedido {
+@SuperBuilder
+@ToString(callSuper = true) // Cambiado a true para ver datos de Base
+public class DetallePedido extends Base {
     private int cantidad;
     private Double subtotal;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "producto_id") // Clave foránea al producto
-    @EqualsAndHashCode.Include
-    private Producto producto; // Relación hacia Producto
-
-
-    // Custom Builder para que calcule el subtotal automáticamente al construir el objeto
-    public static class DetallePedidoBuilder {
-        public DetallePedido build() {
-            Double calculado = 0.0;
-            if (this.producto != null && this.producto.getPrecio() != null) {
-                calculado = this.cantidad * this.producto.getPrecio();
-            }
-            return new DetallePedido(this.cantidad, calculado, this.producto);
-        }
-    }
+    @JoinColumn(name = "producto_id")
+    @ToString.Exclude
+    private Producto producto;
 
     // Método para calcular el subtotal multiplicando cantidad * precio del producto
     private void calcularSubtotal() {
