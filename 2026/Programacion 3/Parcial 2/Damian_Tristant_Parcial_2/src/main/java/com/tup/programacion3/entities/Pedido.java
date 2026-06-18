@@ -18,7 +18,7 @@ import jakarta.persistence.*;
 @AllArgsConstructor
 @SuperBuilder
 @ToString(callSuper = true)
-public class Pedido extends Base implements Calculable {
+public class Pedido extends Base { // Nota: Si quitaste Calculable, asegurate de que compile bien
     @Builder.Default
     private LocalDate fecha = LocalDate.now();
 
@@ -27,26 +27,29 @@ public class Pedido extends Base implements Calculable {
     private Estado estado = Estado.PENDIENTE;
 
     private Double total;
+
     @Enumerated(EnumType.STRING)
     private FormaPago formaPago;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "pedido_id") // Vincula los detalles al pedido en la BD
+    @JoinColumn(name = "pedido_id")
     @Builder.Default
+    @ToString.Exclude // Agregado para evitar StackOverflow con DetallePedido
     private Set<DetallePedido> detalles = new HashSet<>();
 
     public void addDetallePedido(int cantidad, Producto producto) {
-        DetallePedido nuevoDetalle = DetallePedido.builder()
-                .cantidad(cantidad)
-                .producto(producto)
-                .build();
+        // Creamos el objeto de forma segura usando sus setters para que se autocalcule el subtotal
+        DetallePedido nuevoDetalle = new DetallePedido();
+        nuevoDetalle.setProducto(producto);
+        nuevoDetalle.setCantidad(cantidad);
+
         this.detalles.add(nuevoDetalle);
         calcularTotal();
     }
 
     public DetallePedido findDetallePedidoByProducto(Producto producto) {
         for (DetallePedido detalle : detalles) {
-            if (detalle.getProducto().equals(producto)) {
+            if (detalle.getProducto() != null && detalle.getProducto().equals(producto)) {
                 return detalle;
             }
         }
@@ -61,11 +64,9 @@ public class Pedido extends Base implements Calculable {
         }
     }
 
-    @Override
     public void calcularTotal() {
-        // Transformamos el Set de detalles en un Stream, extraemos cada subtotal y los sumamos
         this.total = detalles.stream()
-                .mapToDouble(DetallePedido::getSubtotal)
+                .mapToDouble(d -> d.getSubtotal() != null ? d.getSubtotal() : 0.0)
                 .sum();
     }
 }
