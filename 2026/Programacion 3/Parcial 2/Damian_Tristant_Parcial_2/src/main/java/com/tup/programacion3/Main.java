@@ -29,8 +29,8 @@ public class Main {
             System.out.println("MODULO DE CONTROL: SELECCIONE UNA OPCION");
             System.out.println("1. Registrar nueva Categoria (HU-01)");
             System.out.println("2. Listar Categorías activas (HU-02)");
-            System.out.println("3. Modificar una Categoría (HU-03)");
-            System.out.println("4. Dar de baja una Categoría [Logica] (HU-04)");
+            System.out.println("3. Modificar una Categoria (HU-03)");
+            System.out.println("4. Dar de baja una Categoria [Logica] (HU-04)");
             System.out.println("5. Registrar nuevo Producto (HU-05)");
             System.out.println("6. Listar Productos activos (HU-06)");
             System.out.println("7. Modificar un Producto (HU-07)");
@@ -46,7 +46,7 @@ public class Main {
             }
 
             switch (opcion) {
-                case 1: // HU-01: Alta Categoría
+                case 1: // HU-01: Alta Categoria
                     System.out.print("Ingrese nombre de la categoria: ");
                     String nomCat = scanner.nextLine();
                     System.out.print("Ingrese descripcion de la categoria: ");
@@ -57,7 +57,7 @@ public class Main {
                     System.out.println("[EXITO] Categoria guardada con ID asignado: " + nuevaCat.getId());
                     break;
 
-                case 2: // HU-02: Listar Categorías
+                case 2: // HU-02: Listar Categorias
                     System.out.println("\n--- LISTADO DE CATEGORIAS ACTIVAS ---");
                     List<Categoria> categorias = catRepo.listarActivos();
                     if (categorias.isEmpty()) {
@@ -67,8 +67,8 @@ public class Main {
                     }
                     break;
 
-                case 3: // HU-03: Modificar Categoría
-                    System.out.print("Ingrese el ID de la categoría a modificar: ");
+                case 3: // HU-03: Modificar Categoria
+                    System.out.print("Ingrese el ID de la categoria a modificar: ");
                     Long idCatMod = Long.parseLong(scanner.nextLine());
                     Categoria catMod = catRepo.buscarPorId(idCatMod);
                     if (catMod == null) {
