@@ -1,66 +1,81 @@
 package com.tup.programacion3.repositories;
 
+import com.tup.programacion3.JPAUtil;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import java.util.List;
+import java.util.Optional;
+
 public abstract class BaseRepositoryImpl<T> implements BaseRepository<T> {
-    protected EntityManager em;
+
     private final Class<T> claseEntidad;
 
-    public BaseRepositoryImpl(EntityManager em, Class<T> claseEntidad) {
-        this.em = em;
+    public BaseRepositoryImpl(Class<T> claseEntidad) {
         this.claseEntidad = claseEntidad;
     }
 
     @Override
-    public void guardar(T entidad) {
-        if (!em.getTransaction().isActive()) {
-            em.getTransaction().begin();
+    public T guardar(T entidad) {
+        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try {
+            tx.begin();
+            // Usamos merge() en lugar de persist() para que cree o actualice de forma inteligente
+            T entidadGuardada = em.merge(entidad);
+            tx.commit();
+            return entidadGuardada;
+        } catch (Exception e) {
+            if (tx.isActive()) tx.rollback();
+            throw e;
+        } finally {
+            // Garantizamos el cierre del EntityManager en un bloque finally
+            em.close();
         }
-        em.persist(entidad);
-        em.getTransaction().commit();
     }
 
     @Override
-    public T buscarPorId(Long id) {
-        T entidad = em.find(claseEntidad, id);
-        // Si la entidad está marcada como eliminada lógica, no la exponemos
-        if (entidad != null) {
-            try {
-                // Usamos reflexión para chequear el método isEliminado de la clase Base
-                boolean eliminado = (boolean) entidad.getClass().getMethod("isEliminado").invoke(entidad);
-                if (eliminado) return null;
-            } catch (Exception e) {
-                // Si no tiene el método, se retorna igual
-            }
+    public Optional<T> buscarPorId(Long id) {
+        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
+        try {
+            // Retornamos un Optional<T> para evitar NullPointerException
+            T entidad = em.find(claseEntidad, id);
+            return Optional.ofNullable(entidad);
+        } finally {
+            em.close();
         }
-        return entidad;
     }
 
     @Override
     public List<T> listarActivos() {
-        // Consulta dinámica usando el nombre de la clase actual (solo activos: eliminado = false)
-        String jpql = "SELECT e FROM " + claseEntidad.getSimpleName() + " e WHERE e.eliminado = false";
-        return em.createQuery(jpql, claseEntidad).getResultList();
+        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
+        try {
+            String jpql = "SELECT e FROM " + claseEntidad.getSimpleName() + " e WHERE e.eliminado = false";
+            return em.createQuery(jpql, claseEntidad).getResultList();
+        } finally {
+            em.close();
+        }
     }
 
     @Override
-    public void eliminarLogico(Long id) {
-        T entidad = em.find(claseEntidad, id);
-        if (entidad != null) {
-            if (!em.getTransaction().isActive()) {
-                em.getTransaction().begin();
-            }
-            try {
-                // Invocamos el setter para hacer la baja lógica de forma genérica
-                entidad.getClass().getMethod("setEliminado", boolean.class).invoke(entidad, true);
+    public boolean eliminarLogico(Long id) {
+        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try {
+            tx.begin();
+            T entidad = em.find(claseEntidad, id);
+            if (entidad != null) {
+                // Usamos reflexión para setear el campo 'eliminado' dinámicamente en la clase abstracta
+                claseEntidad.getMethod("setEliminado", boolean.class).invoke(entidad, true);
                 em.merge(entidad);
-                em.getTransaction().commit();
-            } catch (Exception e) {
-                em.getTransaction().rollback();
-                throw new RuntimeException("Error al ejecutar la baja lógica", e);
+                tx.commit();
+                return true; // Retornamos true si se pudo realizar la baja
             }
-        } else {
-            throw new IllegalArgumentException("El ID provisto no existe en el sistema.");
+            return false; // Retornamos false si el ID no existía
+        } catch (Exception e) {
+            if (tx.isActive()) tx.rollback();
+            return false;
+        } finally {
+            em.close();
         }
     }
 }
