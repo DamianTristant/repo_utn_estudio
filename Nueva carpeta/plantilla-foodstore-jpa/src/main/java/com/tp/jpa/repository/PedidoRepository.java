@@ -25,7 +25,15 @@ public class PedidoRepository extends BaseRepository<Pedido> {
      * Retorna los pedidos activos que coinciden con el estado indicado.
      */
     public List<Pedido> buscarPorEstado(EstadoPedido estadoPedido) {
-        // TODO: implementar
-        throw new UnsupportedOperationException("Método no implementado aún");
+        EntityManager em = emf.createEntityManager();
+        try {
+            String jpql = "SELECT p FROM Pedido p " +
+                    "WHERE p.estado = :estado AND p.eliminado = false";
+            return em.createQuery(jpql, Pedido.class)
+                    .setParameter("estado", estadoPedido)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
     }
 }

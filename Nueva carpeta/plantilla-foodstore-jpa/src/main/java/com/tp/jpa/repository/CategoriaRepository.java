@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * Repositorio de Categoria. Además del CRUD heredado implementa la consulta
- * de productos activos pertenecientes a una categoría.
+ * de productos activos pertenecientes a una Categoria.
  *
  * Nota de diseño: como la relación es unidireccional y Categoria es la dueña
  * de la colección Set<Producto>, la navegación se hace desde Categoria hacia
@@ -21,7 +21,7 @@ public class CategoriaRepository extends BaseRepository<Categoria> {
     }
 
     /**
-     * Retorna los productos activos que pertenecen a la categoría indicada.
+     * Retorna los productos activos que pertenecen a la Categoria indicada.
      */
     public List<Producto> buscarProductosPorCategoria(Long categoriaId) {
         EntityManager em = emf.createEntityManager();

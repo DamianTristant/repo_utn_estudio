@@ -32,7 +32,7 @@ public class Categoria extends Base {
 
     public void addProducto(Producto producto) {
         if (!productos.add(producto)) {
-            throw new IllegalArgumentException("Producto ya cargado en la categoría");
+            throw new IllegalArgumentException("Producto ya cargado en la Categoria");
         }
     }
 }

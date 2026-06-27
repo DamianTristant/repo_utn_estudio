@@ -32,8 +32,8 @@ public class Usuario extends Base {
     @Column(name = "celular", length = 20)
     private String celular;
 
-    @Column(name = "contrasena")
-    private String contraseña;
+    @Column(name = "contraseña")
+    private String contrasenia;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "rol", nullable = false, length = 20)

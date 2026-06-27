@@ -91,7 +91,7 @@ public abstract class BaseRepository<T extends Base> {
     }
 
     /**
-     * Baja lógica: busca la entidad por ID, marca eliminado = true y
+     * Baja logica: busca la entidad por ID, marca eliminado = true y
      * sincroniza con merge() (la entidad ya tiene id). Retorna true si la
      * encontró y la dio de baja; false si no existe.
      */
