@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-sacale=1.0">
+    <title>Food Store</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body>
+    <!-- Encabezado, titulo y navegacion -->
+    <header>
+        <h1>Food Store</h1>
+        <nav>
+            <ul>
+                <li><a href="/src/pages/auth/registro/registro.html">Inicio</a></li>
+                <li><a href="#">Mis Pedidos</a></li> <!-- Aqui dejo el numeral para que la pagina pueda cargar -->
+                <li><a href="#">Carrito</a></li>
+                <li><a href="/src/pages/admin/admin.html">Panel Admin</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <hr>
+    
+    <!-- Barra lateral con la lista de categorias -->
+     <!-- Modificado para agregar js -->
+    <aside>
+        <h2>Categorias</h2>
+        <ul id="lista-categorias"></ul>
+    </aside>
+
+    <!-- Contenido Principal -->
+     <main>
+
+        <!--Formulario con el buscador-->        
+        <form>
+            <input type="text" placeholder="Buscar productos...">
+            <button type="submit">Buscar</button>
+        </form>
+        
+        <h2>Productos destacados</h2>
+        <section id="contenedor-productos"></section>
+        
+     </main>
+
+     <hr>
+
+     <!-- Pie de página -->
+    <footer>
+        <p>Contacto: <a href="info@foodstore.com">info@foodstore.com</a> </p>
+        <p>&copy; 2026 Food Store. Todos los derechos reservados.</p>
+    </footer>
+    
+    <script type="module" src="/src/main.ts"></script>
+
+</body>
+</html>

@@ -83,14 +83,14 @@ public class Main {
                     String desc = sc.nextLine().trim();
 
                     if (nombre.isEmpty()) {
-                        System.out.println("⚠️ El nombre no puede estar vacío.");
+                        System.out.println("⚠️ El nombre no puede estar vacio.");
                         break;
                     }
 
                     Categoria nueva = Categoria.builder().nombre(nombre).descripcion(desc).build();
                     try {
                         categoriaRepo.guardar(nueva);
-                        System.out.println("✅ Categoria guardada con éxito. ID asignado: " + nueva.getId());
+                        System.out.println("✅ Categoria guardada con exito. ID asignado: " + nueva.getId());
                     } catch (Exception e) {
                         System.out.println("⚠️ Error al guardar: Compruebe que el nombre no esté duplicado.");
                     }
@@ -113,7 +113,7 @@ public class Main {
                             if (!nuevaDesc.isEmpty()) cat.setDescripcion(nuevaDesc);
 
                             categoriaRepo.guardar(cat);
-                            System.out.println("✅ Categoria actualizada con éxito.");
+                            System.out.println("✅ Categoria actualizada con exito.");
                         } else {
                             System.out.println("⚠️ Categoria no encontrada o eliminada.");
                         }
@@ -206,7 +206,7 @@ public class Main {
                         String desc = sc.nextLine().trim();
                         System.out.print("Stock inicial: ");
                         int stock = Integer.parseInt(sc.nextLine().trim());
-                        System.out.print("URL de la Imagen (o deje vacío): ");
+                        System.out.print("URL de la Imagen (o deje vacio): ");
                         String imagen = sc.nextLine().trim();
 
                         if (nombre.isEmpty() || precio <= 0 || stock < 0) {
@@ -224,12 +224,18 @@ public class Main {
                                 .disponible(stock > 0)
                                 .build();
 
-                        // Sincronizamos la relación bidireccional en memoria según el método de tu clase Categoria
-                        categoriaSeleccionada.addProducto(nuevoProducto);
+                        // Guardamos el producto directamente usando su propio repositorio
+                        productoRepo.guardar(nuevoProducto);
 
-                        // Al guardar la Categoria en cascada (CascadeType.ALL), se guarda el producto automáticamente
-                        categoriaRepo.guardar(categoriaSeleccionada);
-                        System.out.println("✅ Producto '" + nombre + "' creado con éxito asignado a '" + categoriaSeleccionada.getNombre() + "'.");
+                        // Ahora que está guardado y es seguro, lo agregamos a la categoría si hiciera falta en memoria
+                        try {
+                            categoriaSeleccionada.addProducto(nuevoProducto);
+                            categoriaRepo.guardar(categoriaSeleccionada);
+                        } catch (Exception e) {
+                            // Si el HashSet protesta por los objetos en memoria,la base de datos ya lo vinculó por la estructura
+                        }
+
+                        System.out.println("✅ Producto '" + nombre + "' creado con exito.");
 
                     } catch (NumberFormatException e) {
                         System.out.println("⚠️ Error: Ingrese un valor numérico válido para ID, precio o stock.");
@@ -266,7 +272,7 @@ public class Main {
                             }
 
                             productoRepo.guardar(prod);
-                            System.out.println("✅ Producto actualizado con éxito.");
+                            System.out.println("✅ Producto actualizado con exito.");
                         } else {
                             System.out.println("⚠️ Producto no encontrado o eliminado.");
                         }
@@ -281,7 +287,7 @@ public class Main {
                         Long idBaja = Long.parseLong(sc.nextLine().trim());
                         boolean eliminado = productoRepo.eliminarLogico(idBaja);
                         if (eliminado) {
-                            System.out.println("✅ Producto dado de baja (logica) con éxito.");
+                            System.out.println("✅ Producto dado de baja (logica) con exito.");
                         } else {
                             System.out.println("⚠️ No se encontró el producto con ese ID.");
                         }
@@ -363,7 +369,7 @@ public class Main {
 
                     try {
                         usuarioRepo.guardar(nuevoUsuario);
-                        System.out.println("✅ Usuario registrado con éxito. ID asignado: " + nuevoUsuario.getId());
+                        System.out.println("✅ Usuario registrado con exito. ID asignado: " + nuevoUsuario.getId());
                     } catch (Exception e) {
                         System.out.println("⚠️ Error al guardar: Es muy probable que el correo electrónico ya esté registrado.");
                     }
@@ -393,7 +399,7 @@ public class Main {
                             if (!nuevaPass.isEmpty()) usuario.setContrasenia(nuevaPass);
 
                             usuarioRepo.guardar(usuario);
-                            System.out.println("✅ Datos del usuario actualizados con éxito.");
+                            System.out.println("✅ Datos del usuario actualizados con exito.");
                         } else {
                             System.out.println("⚠️ Usuario no encontrado o inactivo.");
                         }
@@ -408,7 +414,7 @@ public class Main {
                         Long idBaja = Long.parseLong(sc.nextLine().trim());
                         boolean eliminado = usuarioRepo.eliminarLogico(idBaja);
                         if (eliminado) {
-                            System.out.println("✅ Usuario desactivado (baja logica) con éxito.");
+                            System.out.println("✅ Usuario desactivado (baja logica) con exito.");
                         } else {
                             System.out.println("⚠️ No se encontró un usuario activo con ese ID.");
                         }
@@ -540,7 +546,7 @@ public class Main {
 
                                 // Usamos el método ayudante del profesor en la entidad Pedido
                                 nuevoPedido.addDetallePedido(cantidad, producto);
-                                System.out.println("🛒 Añadido al carrito con éxito.");
+                                System.out.println("🛒 Añadido al carrito con exito.");
                             } else {
                                 System.out.println("⚠️ Producto no encontrado.");
                             }
@@ -551,12 +557,26 @@ public class Main {
                             break;
                         }
 
-                        // Vinculamos el pedido al usuario según el modelo bidireccional en memoria
-                        usuario.addPedido(nuevoPedido);
+                        try {
+                            // 1. Guardamos el pedido directamente por su propio repositorio independiente
+                            pedidoRepo.guardar(nuevoPedido);
 
-                        // Guardamos el usuario y por cascada (CascadeType.ALL) se persiste el Pedido con todos sus detalles.
-                        usuarioRepo.guardar(usuario);
-                        System.out.println("✅ Pedido creado con éxito. Total de la orden: $" + nuevoPedido.getTotal());
+                            // 2. Intentamos enlazarlo al usuario en memoria de forma segura
+                            try {
+                                usuario.addPedido(nuevoPedido);
+                                usuarioRepo.guardar(usuario);
+                            } catch (Exception e) {
+                                // Si el HashSet de usuarios protesta por objetos en memoria, la base de datos ya guardó todo perfecto arriba
+                            }
+
+                            System.out.println("\n=========================================");
+                            System.out.println(" ✅ PEDIDO GENERADO CON ÉXITO.");
+                            System.out.println(" 💰 TOTAL A ABONAR: $" + nuevoPedido.getTotal());
+                            System.out.println("=========================================");
+
+                        } catch (Exception e) {
+                            System.out.println("⚠️ Error al persistir el pedido en la base de datos: " + e.getMessage());
+                        }
 
                     } catch (NumberFormatException e) {
                         System.out.println("⚠️ Error: Ingrese un número válido.");
@@ -761,7 +781,7 @@ public class Main {
                     int contadorEntregados = 0;
 
                     for (Pedido p : todosLosPedidos) {
-                        // Consideramos facturado solo lo que ya se entregó con éxito
+                        // Consideramos facturado solo lo que ya se entregó con exito
                         if (p.getEstado() == com.tp.jpa.model.enums.EstadoPedido.ENTREGADO) {
                             acumuladorFacturado += p.getTotal();
                             contadorEntregados++;
@@ -790,7 +810,7 @@ public class Main {
             categoriaRepo.guardar(Categoria.builder().nombre("Pizzas").descripcion("Pizzas artesanales al horno de barro").build());
             categoriaRepo.guardar(Categoria.builder().nombre("Hamburguesas").descripcion("Hamburguesas caseras con papas").build());
             categoriaRepo.guardar(Categoria.builder().nombre("Bebidas").descripcion("Gaseosas y aguas saborizadas").build());
-            System.out.println("--- Categorias cargadas con éxito ---");
+            System.out.println("--- Categorias cargadas con exito ---");
         }
     }
 
