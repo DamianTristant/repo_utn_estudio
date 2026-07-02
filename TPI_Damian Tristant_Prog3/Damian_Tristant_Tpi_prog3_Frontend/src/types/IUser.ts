@@ -1,7 +1,7 @@
-import { Rol } from "./rol";
+import type { Rol } from "./Rol";
 
-export interface Iuser {
-    email : String;
-    password : String;
-    rol : Rol;
+export interface IUser {
+  email: string;
+  password: boolean;
+  rol: Rol;
 }

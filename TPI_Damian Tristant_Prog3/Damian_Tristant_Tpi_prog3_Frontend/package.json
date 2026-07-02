@@ -1,7 +1,7 @@
 {
-  "name": "food-store-utn",
+  "name": "proteger_rutas",
   "private": true,
-  "version": "1.0.0",
+  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,7 +9,8 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "typescript": "^5.2.2",
-    "vite": "^5.0.0"
+    "@types/node": "^24.7.1",
+    "typescript": "~5.8.3",
+    "vite": "^7.1.2"
   }
 }

@@ -1,0 +1,15 @@
+:root {
+    --primary-color: #ff4757;
+    --dark-color: #2f3542;
+    --light-gray: #f1f2f6;
+}
+
+body {
+    background-color: #f1f2f6; /* Fondo gris perla suave */
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}

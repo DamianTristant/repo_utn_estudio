@@ -1,37 +1,47 @@
-import { Rol } from "../../../types/rol";
-import { Iuser } from "./../../../types/IUser";
+import type { IUser } from "../../../types/IUser";
+import type { Rol } from "../../../types/Rol";
 
-const fromRegistro = document.querySelector('#form-registro') as HTMLFormElement;
+// Formulario de registro
+const fromRegistro = document.querySelector('#register-form') as HTMLFormElement;
 
-
-
-
-fromRegistro.addEventListener('submit', (e) => {
+fromRegistro?.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    //captura los datos del usuario
-    const email = (document.querySelector('#email') as HTMLInputElement).value;
-    const password = (document.querySelector('#password') as HTMLInputElement).value;
-    const rolInput = document.getElementById('rol') as HTMLSelectElement;
-    const rolValue = rolInput.value as Rol; // Esto va a ser "admin" o "client"
+    // captura los id: email,password y rol desde los id del html
+    const emailInput = document.querySelector('#email') as HTMLInputElement;
+    const passwordInput = document.querySelector('#password') as HTMLInputElement;
+    const rolInput = document.querySelector('#rol') as HTMLSelectElement;
+    
+    if (!emailInput || !passwordInput || !rolInput) {
+        console.error("No se encontraron los campos del formulario");
+        return;
+    }
 
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
+    const rolValue = rolInput.value as Rol;
 
-    //traigo los datos existentes en localStorage o un array vacio si no hay
-    const usuariosGuardados : Iuser[] = JSON.parse(localStorage.getItem('users') || '[]');
+    const rawUsers = localStorage.getItem('users');
+    const usuariosGuardados: IUser[] = rawUsers ? JSON.parse(rawUsers) : [];
 
-    const nuevoUsuario = {
-    email: email,
-    password: password,
-    rol: rolValue // <-- Ahora se guarda lo que elegiste
-};
-
-    //agrego el usuario creado
+    //variable para comparar si el usuario existe
+    const existe = usuariosGuardados.some(u => u.email.toLowerCase() === email.toLowerCase());
+    if (existe) {
+        alert("Este correo ya está registrado.");
+        return;
+    }
+    //Nuevo usuario
+    const nuevoUsuario: IUser = {
+        email: email,
+        password: password as any, 
+        rol: rolValue
+    };
+    //Agrega el usuario
     usuariosGuardados.push(nuevoUsuario);
-
-    //guardo el array actualizado
     localStorage.setItem('users', JSON.stringify(usuariosGuardados));
 
-    //alerta para que cliente sepa que se cargo con exito
-    alert('Registro exitoso, puede iniciar secion.');
+    alert('¡Registro exitoso! Ya podés entrar a tu cuenta.');
+    
+    // Redirige al login
     window.location.href = '../login/login.html';
 });

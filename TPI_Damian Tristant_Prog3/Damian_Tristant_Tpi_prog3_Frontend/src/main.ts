@@ -1,21 +1,36 @@
-import { getSession } from './utils/auth';
-
 const checkAccess = () => {
     const userData = JSON.parse(localStorage.getItem('userData') || 'null');
     const actualPath = window.location.pathname;
 
-  // 1. Si no hay nadie logueado y no está en el login, sale.
-    if (!userData && !actualPath.includes('login.html') && !actualPath.includes('registro.html')) {
-    window.location.href = '/src/pages/auth/login/login.html';
-    return;
-}  
+    //Rutas de acceso publico
+    const isAuthPage = actualPath.includes('login.html') || actualPath.includes('registro.html');
 
-    //Si intenta entrar a admin pero no tiene el rol
+    //Validacion si no esta logueado y quiere entrar a un pagin privada
+    if (!userData && !isAuthPage && actualPath !== '/' && !actualPath.includes('index.html')){
+        window.location.href = '/src/pages/auth/login/login.html';
+        return;
+    }
+
+    //Validacion si esta logueado e intentar ir al login o registro, vuelve al su home
+    if (userData && isAuthPage) {
+        if (userData.rol === 'admin') {
+            window.location.href = '/src/pages/admin/home/home.html';
+        } else {
+            window.location.href = '/src/pages/client/home/home.html';
+        }
+        return;
+    }
+
+    //Proteccion para ADMIN
     if (actualPath.includes('/admin/') && userData?.rol !== 'admin') {
-    alert("¡No tenés permiso para estar acá!");
-    window.location.href = '/index.html';  
-}
-};
+        alert("Acceso denegado: Se requieren permisos de administrador.");
+        window.location.href = '/src/pages/client/home/home.html';
+        return;
+    }
 
-// Ejecutamos la validación apenas carga el script
-checkAccess();
+    //Proteccion para cliente
+    if (actualPath.includes('/client/') && userData?.rol !== 'client') {
+        window.location.href = '/src/pages/admin/home/home.html';
+        return;
+    }
+}

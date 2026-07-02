@@ -1,0 +1,156 @@
+:root {
+    --primary: #27ae60;
+    --danger: #e74c3c;
+    --warning: #f1c40f;
+    --dark: #2d3436;
+    --bg: #f4f7f6;
+}
+
+body { 
+    background-color: var(--bg); 
+    margin: 0; 
+    font-family: 'Segoe UI', sans-serif; 
+}
+
+.admin-header { 
+    background: var(--dark); 
+    color: white; 
+    padding: 1rem 5%; 
+}
+
+.header-container { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    max-width: 1200px; 
+    margin: 0 auto; 
+}
+
+.admin-content { 
+    max-width: 1200px; 
+    margin: 30px auto; 
+    padding: 0 20px; }
+
+.admin-actions { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 20px; }
+
+/* Tabla */
+.table-container { 
+    background: white; 
+    border-radius: 12px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+    overflow: hidden; 
+}
+
+.admin-table { 
+    width: 100%; 
+    border-collapse: collapse; 
+}
+
+.admin-table th { 
+    background: #f8f9fa; 
+    padding: 15px; 
+    text-align: left; 
+    color: var(--dark); 
+    border-bottom: 2px solid #eee; 
+}
+
+.admin-table td { 
+    padding: 15px; 
+    border-bottom: 1px solid #eee; 
+    vertical-align: middle; 
+}
+
+.img-admin { 
+    width: 50px; 
+    height: 50px; 
+    object-fit: cover; 
+    border-radius: 8px; 
+}
+
+/* Botones */
+.btn-primary { 
+    background: var(--primary); 
+    color: white; 
+    border: none; 
+    padding: 10px 20px; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    font-weight: bold; 
+}
+
+.btn-logout { 
+    background: transparent; 
+    border: 1px solid white; 
+    color: white; 
+    padding: 5px 15px; 
+    border-radius: 5px; 
+    cursor: pointer; 
+}
+
+.btn-edit { 
+    color: var(--warning); 
+    background: none; 
+    border: none; 
+    font-size: 1.2rem; 
+    cursor: pointer; 
+}
+
+.btn-delete { 
+    color: var(--danger); 
+    background: none; 
+    border: none; 
+    font-size: 1.2rem; 
+    cursor: pointer; 
+}
+
+/* Modal */
+.modal {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background: rgba(0,0,0,0.5); 
+    display: none; /* Se activa con JS */
+    justify-content: center; 
+    align-items: center; 
+    z-index: 1000;
+}
+
+.modal-card { 
+    background: white; 
+    width: 90%; 
+    max-width: 500px; 
+    padding: 25px; 
+    border-radius: 15px; 
+}
+
+.modal-header { 
+    display: flex; 
+    justify-content: space-between; 
+    margin-bottom: 20px; 
+}
+
+.form-group { 
+    margin-bottom: 15px; 
+    display: flex; 
+    flex-direction: column; 
+}
+
+.form-group input, .form-group textarea { 
+    padding: 10px; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    margin-top: 5px; 
+}
+
+.modal-footer { 
+    display: flex; 
+    justify-content: flex-end; 
+    gap: 10px; 
+    margin-top: 20px;
+}
