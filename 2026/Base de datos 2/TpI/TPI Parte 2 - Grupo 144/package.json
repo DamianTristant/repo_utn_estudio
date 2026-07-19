@@ -1,0 +1,12 @@
+{
+  "name": "tpi-muebles-del-bosque",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "crud.js",
+  "scripts": {
+    "start": "node crud.js"
+  },
+  "dependencies": {
+    "mongodb": "^6.0.0"
+  }
+}
