@@ -1,6 +1,6 @@
 # 1. IMPORTACION DE DATOS
 library(readxl)
-datos <- read_excel("TAI-aglomerado23.xlsx")
+datos <- read_excel("TAI-aglomerado10.xlsx")
 options(scipen = 999) 
 
 # -------------------------------------------------------------
@@ -87,25 +87,23 @@ moda_IV1 <- names(which.max(fi_IV1))
 print("--- Medidas Descriptivas IV1 ---")
 cat("Moda IV1:", moda_IV1, "(Corresponde a la categoría 'Casa')\n\n")
 
-
 # --- Consigna 4: Gráficos ---
 
 # 4.1 Histograma ITF (usando frecuencias absolutas)
 hist(ITF_limpio, 
      breaks = k, 
-     main = "Distribución del Ingreso Total Familiar", 
+     main = "Distribución del Ingreso Total Familiar (Gran Mendoza)", 
      xlab = "Ingresos ($)", 
      ylab = "Frecuencia Absoluta", 
      col = "lightblue", 
      border = "black")
 
 # 4.2 Gráfico Circular IV1
-# Preparamos los textos sumando el % al lado del nombre para que quede más completo
-etiquetas_IV1 <- c("Casa", "Departamento", "Pieza en inquilinato")
+etiquetas_IV1 <- c("Casa", "Departamento")
 porcentajes_IV1 <- round(hi_IV1 * 100, 2)
 etiquetas_pie <- paste(etiquetas_IV1, porcentajes_IV1, "%")
 
 pie(fi_IV1, 
     labels = etiquetas_pie, 
-    main = "Distribución de Hogares por Tipo de Vivienda", 
-    col = c("#66c2a5", "#fc8d62", "#8da0cb"))
+    main = "Distribución de Hogares por Tipo de Vivienda (Gran Mendoza)", 
+    col = c("#66c2a5", "#fc8d62"))
