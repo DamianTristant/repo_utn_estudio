@@ -1,0 +1,34 @@
+0:00 - 0:45] Bloque 1: Presentación y Contexto
+
+Qué decir: "Hola. Mi nombre es Damián Tristán, estudiante de la Tecnicatura Universitaria en Programación (UTN), y voy a presentar la resolución de la Consigna 8 del Trabajo de Aplicación Integrador correspondiente al análisis del Aglomerado 23 (Gran Salta) de la EPH del INDEC (1° Trimestre de 2025)."
+
+Apoyo visual: Mostrar brevemente el entorno de RStudio con el script abierto y el dataset cargado.
+
+[0:45 - 2:00] Bloque 2: Marco Teórico y Definición del Parámetro
+
+Qué decir: "En esta consigna trabajamos sobre la variable Ingreso Total Familiar (ITF). Primero, definimos la población total bajo estudio, que en nuestro aglomerado consta de 
+N=330 hogares. A partir de ella, calculamos el parámetro poblacional (
+μ), es decir, la media real del ingreso para todos los hogares de la región. En nuestro caso, este valor nos sirve como referencia fija para evaluar el comportamiento de las muestras."
+
+Apoyo visual: Resaltar en la consola de R la línea donde se calcula y muestra mu_ITF.
+
+[2:00 - 3:45] Bloque 3: Ejecución del Muestreo Aleatorio Simple (MAS) en R
+
+Qué decir: "Para simular el proceso de inferencia, aplicamos un Muestreo Aleatorio Simple con reposición (replace = TRUE), seleccionando 6 muestras independientes de 20 hogares cada una (
+n=20). Para garantizar la reproducibilidad exacta de los resultados, fijamos una semilla con set.seed(). Vamos a ejecutar el bucle en R para ver los resultados obtenidos."
+
+Apoyo visual: Ejecutar el bloque de código en RStudio y mostrar cómo se imprimen en consola las 6 medias muestrales
+
+[3:45 - 5:00] Bloque 4: Análisis de Resultados y Variabilidad
+
+Qué decir: "Analicemos los resultados: ¿Coinciden los promedios de las muestras con el parámetro poblacional? Como vemos en pantalla, no coinciden exactamente. Cada muestra arroja un valor diferente. Esto ocurre debido a la variabilidad muestral y al error de muestreo inherente a trabajar con subconjuntos reducidos (
+n=20) en una población con alta dispersión de ingresos. Sin embargo, si observamos el promedio global de las 6 muestras, este se aproxima de manera razonable al parámetro real, lo cual demuestra empíricamente que la media muestral es un estimador insesgado."
+
+Apoyo visual: Mostrar el resumen final del script con el promedio de las medias muestrales comparado con el parámetro 
+μ.
+
+[5:00 - 5:30] Bloque 5: Conclusión y Cierre
+
+Qué decir: "En conclusión, este ejercicio nos permite comprobar en la práctica cómo la estadística inferencial nos ayuda a aproximar características de toda una población a partir de muestras limitadas, recordándonos la importancia de considerar la incertidumbre y el tamaño de muestra al momento de tomar decisiones técnicas o de negocio basadas en datos. Muchas gracias."
+
+Apoyo visual: Pantalla final con el script completo o carátula del trabajo.
