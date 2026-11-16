@@ -1,0 +1,12 @@
+Self-Introduction: 
+Good morning, teacher. Today, I am going to introduce myself and present my profile as a developer. My name is Damián Tristant. I am 40 years old and I live in Buenos Aires, Argentina. I am currently studying Programming at UTN. I am very organized, responsible, and passionate about software development and technology.
+
+Work Role, Tasks, and Routines:
+I work as a Junior Software Developer. Every day, I start work at 9 AM. First, I attend the Daily Scrum meeting with my team to report progress. Then, I write clean code, review pull requests, and fix bugs. I work closely with other software developers, a Product Owner, and a Scrum Master. I usually finish my work at 5 PM.
+
+Personal Projects:
+Now, I want to describe a recent project I worked on. It is a web application for an online store:
+
+Objectives: The main goal was to build a product management system with user authentication and a functional shopping cart.
+Tools & Technologies: We used HTML, CSS, TypeScript, Node.js, and MongoDB for database management.
+My Specific Tasks: I created the user login module, built database queries, and tested the REST APIs using Postman.
