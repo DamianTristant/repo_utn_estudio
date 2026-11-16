@@ -65,7 +65,7 @@ cat("7.3 P(Y < 7 en 45 min):", round(p7_3, 4), "\n")
 # TAI - CONSIGNA 8: Muestreo Aleatorio Simple (MAS) con Reposición
 
 # 1. Parámetro poblacional (Media del ITF para N = 330 hogares)
-mu_ITF <- mean(datos_agl23$ITF, na.rm = TRUE)
+mu_ITF <- mean(datos$ITF, na.rm = TRUE)
 cat("Parámetro poblacional (µ):", round(mu_ITF, 4), "\n\n")
 
 # 2. Selección de 6 muestras de n = 20 con reposición
@@ -75,8 +75,8 @@ n <- 20
 num_muestras <- 6
 medias_muestrales <- numeric(num_muestras)
 
-for(i in 1:num_muestras) {
-  muestra <- sample(datos_agl23$ITF, size = n, replace = TRUE)
+for (i in 1:num_muestras) {
+  muestra <- sample(datos$ITF, size = n, replace = TRUE)
   medias_muestrales[i] <- mean(muestra, na.rm = TRUE)
   cat(paste0("Muestra ", i, " (x̄_", i, "): "), round(medias_muestrales[i], 4), "\n")
 }
@@ -85,3 +85,4 @@ for(i in 1:num_muestras) {
 cat("\n--- Resumen de Resultados ---\n")
 cat("Promedio de las 6 medias muestrales:", round(mean(medias_muestrales), 4), "\n")
 cat("Diferencia respecto al parámetro poblacional µ:", round(mean(medias_muestrales) - mu_ITF, 4), "\n")
+
